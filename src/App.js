@@ -1,8 +1,10 @@
-import {useState, useEffect} from 'react';
-import Footer from './components/Footer';
-import Header from './components/Header';
-import Tasks from './components/Tasks';
-import AddTask from './components/AddTask';
+import {useState, useEffect} from 'react'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+import Footer from './components/Footer'
+import Header from './components/Header'
+import Tasks from './components/Tasks'
+import AddTask from './components/AddTask'
+import About from './components/About'
 
 
 const App = () => {
@@ -87,8 +89,13 @@ const fetchTask = async (id) =>{
   
 
   return (
+    <Router>
     <div className="container">
       <Header onClick = {onClick} showAdd = {showAddTask}/>
+
+      <Footer/>
+      <Route path = '/' exact render = {(props)=>(
+      <>
       {showAddTask && <AddTask onAdd = {addTask}/>}
       {tasks.length > 0 ? (
       <Tasks tasks={tasks}
@@ -96,8 +103,11 @@ const fetchTask = async (id) =>{
              onToggle = {toggleReminder}/>)
        : ('No tasks to show')
       }
-      <Footer/>
+        </>
+      )}/>
+      <Route path='/about' component={About}/>
     </div>
+    </Router>
   );
 }
 
